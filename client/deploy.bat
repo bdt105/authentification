@@ -1,1 +1,0 @@
-WinSCP /log="deploy.log" /ini=nul /script="deploy.txt"
