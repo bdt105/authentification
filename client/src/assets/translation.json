@@ -1,0 +1,18 @@
+[
+    {"label":"Email",
+        "translations":[
+            {
+                "language": "fr",
+                "translation":"E mail"
+            }
+        ]
+    },
+    {"label":"Password",
+        "translations":[
+            {
+                "language": "fr",
+                "translation":"Mot de passe"
+            }
+        ]
+    }
+]

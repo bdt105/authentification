@@ -1,0 +1,74 @@
+.container {
+    width: 99%
+}
+
+.ng-sidebar--over {
+    box-shadow: 0 0 2.5em rgba(85, 85, 85, 0.5);
+    width: 300px;
+}
+
+.sidebarMenu{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+.sidebarBranch>.card {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.sidebarBranch>.panel-default>.panel-heading>.panel-title{
+    font-size: 1em;
+    color: black;
+    border-color: transparent;
+}
+
+.sidebarBranch>.panel-default>.panel-heading+.panel-collapse>.panel-body{
+    background-color: rgba(69, 64, 64, 0.05);
+}
+
+.sidebarBranch>.panel-default>.panel-heading{
+    background: transparent;
+    color: black;
+    border-color: transparent;
+}
+
+.sidebarSubmenu{
+    margin-left: 15px;
+    margin-bottom: 10px;
+    border: 1px;
+    font-size: 1.1em;
+    color: black;
+}
+
+.sidebarHeader{
+    background: whitesmoke;
+    height: 180px;
+    --border-bottom: solid 1px grey;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(grey));
+    background-image: -webkit-linear-gradient(top, white, grey);
+    background-image: -moz-linear-gradient(top, white, grey);
+    background-image: linear-gradient(to bottom, white, grey);
+}
+
+.sidebarMenuLink {
+    text-decoration: none; 
+    width: 98%;
+    color: black;
+}
+
+.sidebarMenuLink:hover {
+    text-decoration: none; 
+    color: black;
+}
+
+.sidebarUserImage{
+    margin: 10px;
+}
+
+.sidebarUserText{
+    margin: 10px;
+    font-size: 0.8em;
+    color: white;
+}

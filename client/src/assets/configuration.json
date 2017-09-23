@@ -1,0 +1,51 @@
+{
+    "authentificationApi":
+    {
+        "baseUrlOld": "http://localhost:4000",
+        "baseUrl": "http://vps453668.ovh.net/authent_api",
+        "get": "/get",
+        "users": "/users",
+        "user": "/user",
+        "userFresh": "/user/fresh",
+        "check": "/check",
+        "encrypt": "/encrypt"
+    },
+    "users":
+    {
+        "idFieldName": "iduser", 
+        "title": "Users", 
+        "columns": 
+        [
+            {"label" : "Action", "fieldName": "__action"},
+            {"label" : "Login", "fieldName": "login"},
+            {"label" : "First name", "fieldName": "firstname"},
+            {"label" : "Last name", "fieldName": "lastname"},
+            {"label" : "Email", "fieldName": "email"},
+            {"label" : "Country", "fieldName": "country"},
+            {"label" : "Language", "fieldName": "lang"},
+            {"label" : "Type", "fieldName": "type"},
+            {"label" : "Validated", "fieldName": "validated"}
+        ]
+    },
+    "user":
+    {
+        "idFieldName": "iduser", 
+        "title": "User", 
+        "columns": 
+        [
+            {"label" : "Login", "fieldName": "login"},
+            {"label" : "First name", "fieldName": "firstname"},
+            {"label" : "Last name", "fieldName": "lastname"},
+            {"label" : "Password", "fieldName": "password"},
+            {"label" : "Email", "fieldName": "email"},
+            {"label" : "Country", "fieldName": "country"},
+            {"label" : "Language", "fieldName": "lang"},
+            {"label" : "Type", "fieldName": "type"},
+            {"label" : "Validated", "fieldName": "validated"}
+        ]
+    },
+    "countryApi":{
+        "baseUrl": "https://restcountries.eu/rest/v2",
+        "all": "/all"
+    }
+}

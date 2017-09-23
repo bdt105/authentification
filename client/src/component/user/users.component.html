@@ -1,0 +1,7 @@
+<h1>{{configuration.title}}</h1>
+<items [columns]="configuration.columns" 
+    [data]="data" 
+    (detailClick)="detail($event)"
+    (newClick)="neww($event)"
+    (deleteClick)="deleteLogical($event)">
+</items>

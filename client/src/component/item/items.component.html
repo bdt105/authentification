@@ -1,0 +1,62 @@
+<simple-notifications></simple-notifications>
+<span class="badge" *ngIf="data">{{data.length}}</span>
+<br>
+<br>
+<button type="submit" class="btn btn-primary" (click)="neww()"><i class="fa fa-plus"></i></button>
+<button class="btn btn-success" (click)="showFilters = !showFilters"><i class="fa fa-filter"></i></button>
+<table class="table table-striped" [mfData]="data" [mfRowsOnPage]="12" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+        <tr>
+            <td colspan="100">
+                <mfBootstrapPaginator></mfBootstrapPaginator>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <th *ngFor="let column of columns">
+                <mfDefaultSorter by="{{column.fieldName}}"><translate text="{{column.label}}"></translate></mfDefaultSorter>
+            </th>
+        </tr>
+        <tr *ngIf="showFilters && filters">
+            <th><i class="fa fa-trash" style="cursor: pointer" (click)="clearFilters(item)" [title]="translate('Clear filters')"></i></th>
+            <th *ngFor="let column of columns">
+                <input *ngIf="column.fieldName != '__action'" class="form-control" [(ngModel)]="filters[column.fieldName]" (change)="filter(column)" type="text" >
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of mf.data">
+            <td>
+                <i *ngIf="item.oneLine" class="fa fa-caret-down" (click)="item.oneLine = !item.oneLine" style="cursor: pointer"></i>
+                <i *ngIf="!item.oneLine" class="fa fa-caret-up" (click)="item.oneLine = !item.oneLine" style="cursor: pointer"></i>
+            </td>
+            <td *ngFor="let column of columns">
+                <span [hidden]="column.fieldName == '__action'">
+                    <span *ngIf="column.format != 'html'" [class]="item.oneLine ? 'max-lines' : ''">{{item[column.fieldName]}}</span>
+                    <span *ngIf="column.format == 'html'" [class]="item.oneLine ? 'max-lines' : ''" [innerHTML]="item[column.fieldName]"></span>
+                </span>
+                <span [hidden]="column.fieldName != '__action'">
+                    <i class="fa fa-pencil" style="cursor: pointer" (click)="detail(item)" [title]="translate('Detail')"></i> 
+                    <i class="fa fa-files-o" style="cursor: pointer" (click)="duplicate(item)" [title]="translate('Duplicate')"></i> 
+                    <i mwlConfirmationPopover
+                        [title]="translate('Delete')"
+                        [message]="translate('Are you sure you want to delete that element?')"
+                        [confirmText]="translate('Yes')"
+                        [cancelText]="translate('No')"
+                        placement="right"
+                        (confirm)="delete(item)"
+                    class="fa fa-trash" style="cursor: pointer"></i>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="100">
+                <mfBootstrapPaginator></mfBootstrapPaginator>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<simple-notifications></simple-notifications>

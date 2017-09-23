@@ -1,0 +1,54 @@
+<div class="alert alert-warning" *ngIf="itemForm.dirty || changed">
+  <strong><translate text="Warning"></translate></strong> <translate text="Don't forget to save your changes"></translate>
+</div>
+<br>
+<form #itemForm="ngForm" class="form-horizontal">
+    <fieldset *ngIf="data">
+    <div class="form-group" *ngFor="let column of columns">
+      <label for="{{column.fieldName}}" class="col-lg-2 control-label"><translate [text]="column.label"></translate></label>
+        <div class="col-lg-10">
+            <input *ngIf="!column.format" 
+                name="{{column.fieldName}}" 
+                type="text" 
+                class="form-control" 
+                id="{{column.fieldName}}" 
+                placeholder="{{column.label}}" 
+                [(ngModel)]="data[column.fieldName]">
+            <textarea *ngIf="column.format == 'xml'" 
+                rows="10" cols="50" 
+                name="{{column.fieldName}}" 
+                class="form-control" 
+                [(ngModel)]="data[column.fieldName]">
+            </textarea>        
+            <i *ngIf="column.format == 'xml'" 
+                (click)="data[column.fieldName] = beautifyXml(data[column.fieldName])" 
+                class="fa fa-magic" 
+                style="cursor: pointer"></i>
+            <i *ngIf="column.format == 'date'" 
+                (click)="data[column.fieldName] = dateToNow()" 
+                class="fa fa-magic" 
+                style="cursor: pointer"></i>
+            <tinymce *ngIf="column.format == 'html'" 
+                [elementId]="'my-editor-id'" 
+                (onEditorKeyup)="updateHtml($event, item, column.fieldName)" 
+                [data]="data[column.fieldName]" 
+                title="translate('Beautify XML text')"></tinymce>
+        </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2 control-label"></label>
+      <div class="col-lg-10">
+        <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="!itemForm.dirty && !changed"><translate text="Save"></translate></button>
+        <button mwlConfirmationPopover class="btn btn-danger" 
+            [title]="translate('Delete')"
+            [message]="translate('Are you sure you want to delete that element?')"
+            [confirmText]="translate('Yes')"
+            [cancelText]="translate('No')"
+            placement="right"
+            (confirm)="delete()"><translate text="Delete"></translate></button>        
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<simple-notifications></simple-notifications>

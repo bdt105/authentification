@@ -1,0 +1,60 @@
+<h1><translate text="Login"></translate></h1>
+<form [formGroup]="form" class="form-horizontal">
+    <fieldset>
+        <div class="form-group">
+            <label for="inputEmail" class="col-lg-2 control-label"><translate text="Login"></translate></label>
+            <div class="col-lg-10">
+                <input formControlName="login" type="text" class="form-control" placeholder="{{translate('Login')}}">
+                <div *ngIf="form.controls.login.hasError('required')">Login is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label"><translate text="Password"></translate></label>
+            <div class="col-lg-10">
+                <input formControlName="password" type="password" class="form-control" placeholder="{{translate('Password')}}">
+                <p *ngIf="form.controls.password.errors">Password is required!</p>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="newSubscription">
+            <label for="inputPassword" class="col-lg-2 control-label"><translate text="Confirm password"></translate></label>
+            <div class="col-lg-10">
+                <input formControlName="passwordConfirm" type="password" class="form-control" placeholder="{{translate('Confirm password')}}">
+                <div *ngIf="form.hasError('mismatchedPasswords')">Passwords do not match.</div>
+             </div>
+        </div>
+        <div class="form-group">
+            <label for="inputRememberMe" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <input formControlName="rememberMe" type="checkbox"> <translate text="Remember me"></translate>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <div *ngIf="connexion && connexion.decoded" class="alert alert-info" role="alert">
+                    <translate text="You are connected as"></translate> <a href="#!/user">{{connexion.decoded.login}}</a>. <a href (click)="disconnect()"><translate text="Disconnect"></translate></a>
+                </div>               
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!connexion || (connexion && !connexion.token)">
+            <label for="inputPassword" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <a routerLink="/forgotPassword" routerLinkActive="active"><translate text="I forgot my password"></translate></a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label"></label>
+            <div class="col-lg-10">
+                <button [disabled]="!form.valid" type="submit" class="btn btn-primary" (click)="connect()"><translate text="Login"></translate></button> or 
+                <button [disabled]="!form.valid" type="submit" class="btn btn-warning" (click)="neww()"><translate text="Create a new account"></translate></button>
+                <i *ngIf="!loadingDone" class="fa fa-spinner fa-spin" title="{{translate('I\'am a bit slow but I\'m working hard, a little more patience please')}}"></i>                
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label"></label>
+            <div *ngIf="error" class="alert alert-danger col-lg-10" role="alert">{{error}}</div>
+        </div>
+    </fieldset>
+</form>
+<br>
+<br>

@@ -1,0 +1,227 @@
+-----------------------
+description: get authentification/token from login and password
+url : http://localhost:4000/get
+method : POST
+body : 
+{
+	"login": "admin",
+	"password": "dere123469"
+}
+result :
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw",
+    "status": "OK",
+    "decoded": {
+        "iduser": 1,
+        "login": "admin",
+        "password": null,
+        "email": "bernard.deregnaucourt@vidal.fr",
+        "type": 0,
+        "country": "fr",
+        "lastName": null,
+        "firstName": null,
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": "",
+        "availability": null,
+        "lang": "fr",
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null,
+        "iat": 1505202789
+    }
+}
+-----------------------
+description: check validity of a token
+url : http://localhost:4000/check
+method : POST
+body : 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw"
+}
+result :
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjoxLCJjb3VudHJ5IjoiRlIiLCJsYXN0TmFtZSI6IkFkbWluIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6bnVsbCwiYXZhaWxhYmlsaXR5IjpudWxsLCJsYW5nIjpudWxsLCJwb3N0YWxjb2RlIjpudWxsLCJjaXR5IjpudWxsLCJhZGRyZXNzMSI6bnVsbCwiYWRkcmVzczIiOm51bGwsImlhdCI6MTUwNDg5MTcyOH0.FdCsMPu4wa3HtOaWYrmgQgoGFkPYrkB0MK9gT9l9CYo",
+    "status": "OK",
+    "decoded": {
+        "iduser": 1,
+        "login": "admin",
+        "password": null,
+        "email": "bernard.deregnaucourt@vidal.fr",
+        "type": 1,
+        "country": "FR",
+        "lastName": "Admin",
+        "firstName": "Admin",
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": null,
+        "availability": null,
+        "lang": null,
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null,
+        "iat": 1504891728
+    }
+}
+-----------------------
+description: get users from filter
+url : http://localhost:4000/users
+method : POST
+body : 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw",
+    "filter": "lastname like '%name%'",
+    "limit": 1,
+    "offset": 2
+}
+result :
+[
+    {
+        "iduser": 1,
+        "login": "chlux",
+        "email": "",
+        "type": 0,
+        "country": "FR",
+        "lastName": null,
+        "firstName": null,
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": "",
+        "availability": null,
+        "lang": null,
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null
+    },
+    {
+        "iduser": 1,
+        "login": "chlux",
+        "email": "",
+        "type": 0,
+        "country": "FR",
+        "lastName": null,
+        "firstName": null,
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": "",
+        "availability": null,
+        "lang": null,
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null
+    }
+]]
+
+-----------------------
+description: create / update a user from its id
+url : http://localhost:4000/user
+method : PUT
+body : 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw",
+    "id": ""
+}
+result :
+[
+    {
+        "iduser": 1,
+        "login": "chlux",
+        "email": "",
+        "type": 0,
+        "country": "FR",
+        "lastName": null,
+        "firstName": null,
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": "",
+        "availability": null,
+        "lang": null,
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null
+    },
+    {
+        "iduser": 1,
+        "login": "chlux",
+        "email": "",
+        "type": 0,
+        "country": "FR",
+        "lastName": null,
+        "firstName": null,
+        "phone1": null,
+        "phone2": null,
+        "phone3": null,
+        "office": null,
+        "tag": "",
+        "availability": null,
+        "lang": null,
+        "postalcode": null,
+        "city": null,
+        "address1": null,
+        "address2": null
+    }
+]]
+-----------------------
+description: delete a user from its id
+url : http://localhost:4000/user
+method : DELETE
+body : 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw",
+    "id": ""
+}
+result : database return
+{
+    "fieldCount": 0,
+    "affectedRows": 1,
+    "insertId": 0,
+    "serverStatus": 2,
+    "warningCount": 0,
+    "message": "(Rows matched: 1  Changed: 1  Warnings: 0",
+    "protocol41": true,
+    "changedRows": 1
+}
+-----------------------
+description: new empty user (not saved)
+url : http://localhost:4000/user/new
+method : POST
+body : 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDUyMDI3ODl9.r674ehIXX4yga5F4wCJpscHUSB2ux9hxfNW0ScKw3sw"
+}
+result : database return
+{
+    "iduser": 1,
+    "login": "chlux",
+    "email": "",
+    "type": 0,
+    "country": "FR",
+    "lastName": null,
+    "firstName": null,
+    "phone1": null,
+    "phone2": null,
+    "phone3": null,
+    "office": null,
+    "tag": "",
+    "availability": null,
+    "lang": null,
+    "postalcode": null,
+    "city": null,
+    "address1": null,
+    "address2": null
+}
