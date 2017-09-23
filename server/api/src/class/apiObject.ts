@@ -22,7 +22,7 @@ export class ApiObject {
         this.token = token;
         let databaseObject = new DatabaseObject("");
         this.orderby = this.tableName + "." + this.idFieldName;
-        this.select = (fields ? databaseObject.fieldsToString(this.tableName, this.fields, false) : "*");
+        this.select =  (fields ? databaseObject.fieldsToString(this.tableName, this.fields, false) : "*");
     }
 
     private callbackLoad(err: any, rows: any, callback: Function){
