@@ -1,8 +1,7 @@
 {
     "authentificationApi":
     {
-        "baseUrlOld": "http://localhost:4000",
-        "baseUrl": "http://vps453668.ovh.net/authent_api",
+        "baseUrl": "http://localhost:4000",
         "get": "/get",
         "users": "/users",
         "user": "/user",
