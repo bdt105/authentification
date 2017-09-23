@@ -1,0 +1,13 @@
+open sftp://root:sMi5K5qp@vps453668.ovh.net/ -hostkey="ssh-ed25519 256 ad:76:69:9e:70:b7:77:5a:48:a8:e6:12:9f:dc:23:ba"
+
+lcd D:\OneDrive\Developpement\private\new\authentification\client\dist
+cd /usr/local/app/front/authentification
+
+put build
+
+
+
+exit
+
+# Exécutez le script à l''aide d''une commande comme :
+# "C:\Program Files (x86)\WinSCP\WinSCP.exe" /log="C:\chemin d''accès en écriture\pour ouvrir\une session\WinSCP.log" /ini=nul /script="C:\chemin d''accès\pour\le script\script.txt"
