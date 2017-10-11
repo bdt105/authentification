@@ -50,6 +50,8 @@ For example you could call:
 
 **Note:** *In configuration file, admin token is used to create new user without any connection (signup functionality).*
 
+Take a look at swagger file authentification.yaml for API precise usage
+
 ## **How to install?** ##
 
 - Create the MySql database
