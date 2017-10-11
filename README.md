@@ -1,8 +1,8 @@
-## Authentification API ##
+# Authentification API #
 This is an api to manage simple authentification. It's based on [JWT](https://jwt.io).
 You may ask for a token, authentificate thanks to this token and manage users too. The database is Mysql.
 
-# **Requirements** #
+## **Requirements** ##
 
 You need any latest version of
 - MySql Database
@@ -38,7 +38,7 @@ You have to configure the API by creating a JSON configuration file in /conf dir
 }
 ~~~    
 
-# **How does it work?** #
+## **How does it work?** ##
 
 JWT is very convinient because for authentification request no need to access the database.
 Indeed, first create a user then get a token out of it and store that token. Everytime a user wants to perfom an action check the token again the server, no database access is need, only the validity of the token is check (what is not time or resource consuming). Learn more [here](https://jwt.io).
@@ -50,7 +50,7 @@ For example you could call:
 
 **Note:** *In configuration file, admin token is used to create new user without any connection (signup functionality).*
 
-# **How to install?** #
+## **How to install?** ##
 
 - Create the MySql database
 
