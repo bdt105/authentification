@@ -1,0 +1,427 @@
+swagger: '2.0'
+info:
+  contact:
+    email: "bdt105@gmail.com"
+  version: '1.0'
+  title: Authentification
+  description: | 
+    This is an api to manage simple authentification. It's based on [JWT](https://jwt.io).
+    You may ask for a token, authentificate thanks to this token and manage users too. The database is Mysql.
+    
+    # **Requirements** #
+    ---
+    You need any latest version of
+    - MySql Database
+    - NodeJS
+    
+    You have to configure the API by creating a JSON configuration file in /conf directory (**do not change the name**  *configuration.json*).
+    
+    **/conf/configuration.conf** example
+    ~~~
+    {
+        "mySql": 
+        {
+        "host": "localhost",
+            "user": "admin",
+            "port": "3306",
+            "password": "admin",
+            "database": "authentification"
+        },
+        "authentification": 
+        {
+            "secret": "your JWT secret here",
+            "salt": "Your hash salt here to encrypt passwords starts with '$2a$10$' (salt version compatible), total salt length must be >= 29",
+            "userRequestEmail": "your email here",
+            "adminToken": "For new user request operation enter you admin token here"
+        },
+        "common":
+        {
+            "port": 4000,
+            "logToFile": true,
+            "logToConsole": true,
+            "logFile" : "authentification.log"
+        }
+    }
+    ~~~    
+
+    # **How does it work?** #
+    ---
+    JWT is very convinient because for authentification request no need to access the database.
+    Indeed, first create a user then get a token out of it and store that token. Everytime a user wants to perfom an action check the token again the server, no database access is need, only the validity of the token is check (what is not time or resource consuming). Learn more [here](https://jwt.io).
+    
+    For example you could call:
+    1. PUT /user (creates the user)
+    2. POST /get (gets the token)
+    3. POST /check (verifies the token)
+    
+    **Note:** *In configuration file, admin token is used to create new user without any connection (signup functionality).*
+    
+    # **How to install?** #
+    ---
+    - Create the MySql database
+
+    ~~~
+    CREATE SCHEMA authentification;
+    
+    CREATE TABLE `user` (
+      `iduser` int(11) NOT NULL AUTO_INCREMENT,
+      `login` varchar(300) NOT NULL,
+      `password` varchar(300) NOT NULL,
+      `email` varchar(300) NOT NULL,
+      `type` tinyint(4) NOT NULL DEFAULT '0',
+      `country` varchar(5) DEFAULT NULL,
+      `lastname` varchar(100) DEFAULT NULL,
+      `firstname` varchar(100) DEFAULT NULL,
+      `phone1` varchar(45) DEFAULT NULL,
+      `phone2` varchar(45) DEFAULT NULL,
+      `phone3` varchar(45) DEFAULT NULL,
+      `tag` varchar(100) DEFAULT NULL,
+      `availability` varchar(45) DEFAULT NULL,
+      `language` varchar(5) DEFAULT NULL,
+      `office` varchar(100) DEFAULT NULL,
+      `postalcode` varchar(10) DEFAULT NULL,
+      `city` varchar(100) DEFAULT NULL,
+      `address1` varchar(1000) DEFAULT NULL,
+      `address2` varchar(1000) DEFAULT NULL,
+      `application` varchar(45) NOT NULL,
+      `validated` tinyint(4) NOT NULL DEFAULT '0',
+      `organisation` varchar(300) DEFAULT NULL,
+      `creationdate` datetime NOT NULL,
+      `updatedate` datetime NOT NULL,
+      PRIMARY KEY (`iduser`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ~~~
+    - **Set the configuration.json**
+    Set all database parameters and also *secret* and *salt* parameters
+    - **Create admin user, user type must be 1**
+    1. Get encrypted admin user password: call */encrypt* (body : {"text": "password"})
+    2. Insert user admin with:
+    ~~~
+    INSERT INTO `user` (`login`, `type`, `country`, `lastName`, `firstName`, `password`, `email`, `validated`, `application`, `creationdate`, `updatedate`) VALUES 
+    ('admin', '1', 'FR', 'Admin', 'Admin', 'encrypted password', 'my.emal@email.com', 1, 'authentification', '2017-01-01 12:00:00', '2017-01-01 12:00:00');
+    ~~~
+    - **Get the token: call** */get* (body : {login: "admin", password: "plain password"})
+    - **Set admin token** in /conf/configuration.json
+    
+    **You're good to go!**
+host: localhost:4000
+schemes:
+  - http
+paths:
+  /get:
+    post:
+      tags:
+        - Authentification
+      description: Returns authentification/token from login and password
+      parameters:
+        - in: body
+          name: body
+          description: "Your login and password"
+          required: true
+          schema:
+            $ref: '#/definitions/LoginData'
+      responses:
+        '200':
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/AuthentificationResultOk'
+        '404':
+          description: "Incorrect login and/or password"
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+  /check:
+    post:
+      tags:
+        - Authentification
+      description: Returns authentification/token from login and password
+      parameters:
+        - in: body
+          name: body
+          description: Your login and password
+          required: true
+          schema:
+            $ref: '#/definitions/Token'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/AuthentificationResultOk'
+        '404':
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+  /encrypt:
+    post:
+      tags:
+        - User
+      description: Gets encrypted text (used for encrypting passwords). salt will be the one set in JSON file ( configuration.conf)
+      parameters:
+        - in: body
+          name: body
+          description: Your filter and other
+          required: true
+          schema:
+            $ref: '#/definitions/EncryptQuery'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/EncryptResult'
+        '404':
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+  /users:
+    post:
+      tags:
+        - User
+      description: Returns all the users
+      parameters:
+        - in: body
+          name: body
+          description: Your filter and other
+          required: true
+          schema:
+            $ref: '#/definitions/Query'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '404':
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+  /user/check:
+    post:
+      tags:
+        - User
+      description: Check if a user exists according to their login
+      parameters:
+        - in: body
+          name: body
+          description: Your filter and other
+          required: true
+          schema:
+            $ref: '#/definitions/UserCheckQuery'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/UserCheckResult'
+  /user/signup:
+    put:
+      tags:
+        - User
+      description: Adds a user without a token (for signup function). Admin token in configuration.json is then used. **Password is stored as is, it MUST be encrypted first**
+      parameters:
+        - in: body
+          name: body
+          description: Your filter and other
+          required: true
+          schema:
+            $ref: '#/definitions/userSignupQuery'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/AuthentificationResultOk'
+  /user:
+    put:
+      tags:
+        - User
+      description: Adds or updates a user
+      parameters:
+        - in: body
+          name: body
+          description: Token and id of user to update. No Id will insert the user. **Password is stored as is, it MUST be encrypted first**
+          required: true
+          schema:
+            $ref: '#/definitions/userAddUpdateQuery'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DatabaseResult'
+        '404':
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+    delete:
+      tags:
+        - User
+      description: Deletes a user
+      parameters:
+        - in: body
+          name: body
+          description: The id of the user to delete
+          required: true
+          schema:
+            $ref: '#/definitions/PutUser'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/DatabaseResult'
+        '404':
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/AuthentificationResultError'
+definitions:
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+  LoginData:
+    type: object
+    properties:
+      token:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+  PutUser:
+    type: object
+    properties:
+      token:
+        type: string
+      id:
+        type: integer
+  Query:
+    type: object
+    properties:
+      token:
+        type: string
+      filter:
+        type: string
+      limit:
+        type: string
+      offset:
+        type: string
+  EncryptQuery:
+    type: object
+    properties:
+      token:
+        type: string
+      text:
+        type: string
+  EncryptResult:
+    type: object
+    properties:
+      encrypted:
+        type: string
+  UserCheckQuery:
+    type: object
+    properties:
+      login:
+        type: string
+  UserCheckResult:
+    type: object
+    properties:
+      found:
+        type: boolean
+  User:
+    type: object
+    properties:
+      iduser:
+        type: integer
+      login:
+        type: string
+      password:
+        type: string
+        description: Encoded password
+      email:
+        type: string
+      country:
+        type: string
+        description: 2 digit ISO country code
+      firstname:
+        type: string
+      lastname:
+        type: string
+      phone1:
+        type: string
+      phone2:
+        type: string
+      phone3:
+        type: string
+      office:
+        type: string
+      tag:
+        type: string
+      availability:
+        type: string
+        description: 'List of country to which the user can access, among FR, ES, EA, XX'
+      language:
+        type: string
+        description: Language of the user among FR and EN
+      postalcode:
+        type: string
+      city:
+        type: string
+      address1:
+        type: string
+      address2:
+        type: string
+  AuthentificationResultOk:
+    type: object
+    properties:
+      token:
+        type: string
+        description: JWT token
+      status:
+        type: string
+        description: Response status
+        enum:
+          - OK
+      decoded:
+        $ref: '#/definitions/User'
+  userSignupQuery:
+    type: object
+    properties:
+      token:
+        type: string
+        description: JWT token
+      user:
+        $ref: '#/definitions/User'
+  userAddUpdateQuery:
+    type: object
+    properties:
+      token:
+        type: string
+        description: JWT token
+      user:
+        $ref: '#/definitions/User'  
+  AuthentificationResultError:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Response status
+        enum:
+          - ERR
+      message:
+        type: string
+  DatabaseResult:
+    type: object
+    properties:
+      fieldCount:
+        type: integer
+      affectedRows:
+        type: integer
+        description: Number of rows affected, inserts and updates
+      insertId:
+        type: integer
+        description: When insert is performed contains the id of the new record
+      serverStatus:
+        type: integer
+      warningCount:
+        type: integer
+      changedRows:
+        type: integer

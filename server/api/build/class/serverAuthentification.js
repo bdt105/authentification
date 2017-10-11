@@ -24,11 +24,13 @@ class ServerAuthentification {
                 if (err) {
                     toolbox_1.Toolbox.log("/get");
                     toolbox_1.Toolbox.log(err);
+                    response.status(404);
                     response.send(JSON.stringify(this.errorMessage(err)));
                 }
                 else {
                     var jwt = require('jsonwebtoken');
                     let ret = connexion.checkJwt(data);
+                    response.status(200);
                     response.setHeader('content-type', 'application/json');
                     response.send(JSON.stringify(ret));
                 }
@@ -41,16 +43,18 @@ class ServerAuthentification {
             let connexion = new connexion_1.Connexion();
             let ret = connexion.checkJwt(token);
             response.setHeader('content-type', 'application/json');
+            response.status(ret.token ? 200 : 404);
             response.send(JSON.stringify(ret));
             toolbox_1.Toolbox.log("/check");
             toolbox_1.Toolbox.log(JSON.stringify(ret));
         });
         this.app.post('/encrypt', upload.array(), (request, response) => {
-            let token = request.body.token;
+            //            let token = request.body.token;
             let text = request.body.text;
             let connexion = new connexion_1.Connexion();
             let encrypt = connexion.encrypt(text);
             let ret = { "encrypted": encrypt };
+            response.status(200);
             response.setHeader('content-type', 'application/json');
             response.send(JSON.stringify(ret));
             toolbox_1.Toolbox.log("/crypt");
@@ -61,6 +65,7 @@ class ServerAuthentification {
             let jwt = require('jsonwebtoken');
             let connexion = new connexion_1.Connexion();
             let ret = connexion.checkJwt(token);
+            response.status(ret.token ? 200 : 404);
             response.setHeader('content-type', 'application/json');
             response.send(JSON.stringify(ret));
         });

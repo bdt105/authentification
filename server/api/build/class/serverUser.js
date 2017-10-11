@@ -27,6 +27,9 @@ class ServerUser extends serverObject_1.ServerObject {
                     response.send(JSON.stringify(data));
                 }
             };
+            if (!usr) {
+                response.send(this.errorMessage('Please define a user'));
+            }
             let table = new apiObject_1.ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
             table.save(callback, usr);
         });
@@ -46,6 +49,9 @@ class ServerUser extends serverObject_1.ServerObject {
                     }
                 }
             };
+            if (!login) {
+                response.send(this.errorMessage('Please define a login'));
+            }
             let table = new apiObject_1.ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
             table.loadFromWhere(callback, "login='" + login + "'");
         });

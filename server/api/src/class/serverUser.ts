@@ -36,7 +36,11 @@ export class ServerUser extends ServerObject {
                     response.send(JSON.stringify(data));
                 }
             }
-        
+
+            if (!usr){
+                response.send(this.errorMessage('Please define a user'))
+            }
+                
             let table = new ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
             
             table.save(callback, usr);
@@ -57,6 +61,10 @@ export class ServerUser extends ServerObject {
                     }
                 }
             }
+
+            if (!login){
+                response.send(this.errorMessage('Please define a login'))
+            }            
         
             let table = new ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
             

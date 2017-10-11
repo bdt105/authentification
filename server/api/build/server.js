@@ -4,7 +4,6 @@ const express = require("express");
 const connexion_1 = require("./class/connexion");
 const toolbox_1 = require("./class/toolbox");
 const serverAuthentification_1 = require("./class/serverAuthentification");
-const serverObject_1 = require("./class/serverObject");
 const serverUser_1 = require("./class/serverUser");
 const configuration_1 = require("./class/configuration");
 let app = express();
@@ -27,14 +26,6 @@ let connexion = new connexion_1.Connexion().tryConnectSql();
 new serverAuthentification_1.ServerAuthentification(app).assign();
 // User
 new serverUser_1.ServerUser(app).assign();
-// Prescription
-new serverObject_1.ServerObject(app).assign("prescription", "idprescription");
-// Prescription lines
-new serverObject_1.ServerObject(app).assign("prescriptionline", "idprescriptionline");
-// Doc
-new serverObject_1.ServerObject(app).assign("doc", "iddoc");
-// Doc descriptions
-new serverObject_1.ServerObject(app).assign("docdescription", "iddocdescription");
 app.listen(port);
 toolbox_1.Toolbox.log("Listening port " + port.toString());
 //# sourceMappingURL=server.js.map

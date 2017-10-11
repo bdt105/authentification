@@ -45,6 +45,10 @@ export class ServerObject {
                 }
             }
 
+            if (!token){
+                response.send(this.errorMessage('Please define a token'))
+            }
+
             let table = new ApiObject(token, tableName, idFieldName, fields);
         
             table.loadFromWhere(callback, where, limit, offset);
@@ -62,6 +66,14 @@ export class ServerObject {
                     response.send(JSON.stringify(data));
                 }
             }
+
+            if (!token){
+                response.send(this.errorMessage('Please define a token'))
+            }
+        
+            if (!usr){
+                response.send(this.errorMessage('Please define a ' + tableName))
+            }
         
             let table = new ApiObject(token, tableName, idFieldName, fields);
             
@@ -78,6 +90,10 @@ export class ServerObject {
                     response.setHeader('content-type', 'application/json');
                     response.send(JSON.stringify(data));
                 }
+            }
+
+            if (!token){
+                response.send(this.errorMessage('Please define a token'))
             }
         
             let table = new ApiObject(token, tableName, idFieldName, fields);
@@ -97,7 +113,15 @@ export class ServerObject {
                     response.send(JSON.stringify(data));
                 }
             }
-        
+
+            if (!token){
+                response.send(this.errorMessage('Please define a token'))
+            }
+                
+            if (!id){
+                response.send(this.errorMessage('Please define an id'))
+            }
+                
             let table = new ApiObject(token, tableName, idFieldName, fields);
             
             table.deleteFromId(callback, id);

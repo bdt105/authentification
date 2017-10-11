@@ -33,10 +33,12 @@ export class ServerAuthentification {
                 if (err){
                     Toolbox.log("/get");
                     Toolbox.log(err);
+                    response.status(404);
                     response.send(JSON.stringify(this.errorMessage(err)));
                 }else{
                     var jwt = require('jsonwebtoken');
                     let ret = connexion.checkJwt(data);
+                    response.status(200);
                     response.setHeader('content-type', 'application/json');
                     response.send(JSON.stringify(ret));
                 }
@@ -51,19 +53,21 @@ export class ServerAuthentification {
             let connexion = new Connexion();
             let ret = connexion.checkJwt(token);
             response.setHeader('content-type', 'application/json');
+            response.status(ret.token ? 200 : 404);
             response.send(JSON.stringify(ret));
             Toolbox.log("/check");
             Toolbox.log(JSON.stringify(ret));
         });
         
         this.app.post('/encrypt', upload.array(), (request: any, response: any) => {
-            let token = request.body.token;
+//            let token = request.body.token;
             let text = request.body.text;
 
             let connexion = new Connexion();
             let encrypt = connexion.encrypt(text);
             let ret = {"encrypted": encrypt};
 
+            response.status(200);
             response.setHeader('content-type', 'application/json');
             response.send(JSON.stringify(ret));
             
@@ -76,6 +80,7 @@ export class ServerAuthentification {
             let jwt = require('jsonwebtoken');
             let connexion = new Connexion();
             let ret = connexion.checkJwt(token);
+            response.status(ret.token ? 200 : 404);
             response.setHeader('content-type', 'application/json');
             response.send(JSON.stringify(ret));
         });

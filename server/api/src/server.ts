@@ -1,11 +1,8 @@
-import { toASCII } from 'punycode';
 import express = require('express');
 
-import { DatabaseTable } from "./class/databaseObjects";
 import { Connexion } from "./class/connexion";
 import { Toolbox } from "./class/toolbox";
 import { ServerAuthentification } from "./class/serverAuthentification";
-import { ServerObject } from "./class/serverObject";
 import { ServerUser } from "./class/serverUser";
 import { Configuration } from "./class/configuration";
 
@@ -35,18 +32,6 @@ new ServerAuthentification(app).assign();
 
 // User
 new ServerUser(app).assign();
-
-// Prescription
-new ServerObject(app).assign("prescription", "idprescription");
-
-// Prescription lines
-new ServerObject(app).assign("prescriptionline", "idprescriptionline");
-
-// Doc
-new ServerObject(app).assign("doc", "iddoc");
-
-// Doc descriptions
-new ServerObject(app).assign("docdescription", "iddocdescription");
 
 app.listen(port);
 Toolbox.log("Listening port " + port.toString());
