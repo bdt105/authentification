@@ -1,3 +1,4 @@
+## Authentification API ##
 This is an api to manage simple authentification. It's based on [JWT](https://jwt.io).
 You may ask for a token, authentificate thanks to this token and manage users too. The database is Mysql.
 
