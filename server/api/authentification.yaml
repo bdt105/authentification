@@ -335,7 +335,7 @@ definitions:
         type: string
       password:
         type: string
-        description: Encoded password or null decoded tag.
+        description: Encoded password or null id 'decoded' tag in /get and /check.
       email:
         type: string
       country:
