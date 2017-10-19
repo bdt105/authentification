@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const connexion_1 = require("./class/connexion");
-const toolbox_1 = require("./class/toolbox");
+const dist_1 = require("bdt105connexion/dist");
+const myToolbox_1 = require("./class/myToolbox");
 const serverAuthentification_1 = require("./class/serverAuthentification");
 const serverUser_1 = require("./class/serverUser");
-const configuration_1 = require("./class/configuration");
 let app = express();
 // For POST-Support
+let myToolbox = new myToolbox_1.MyToolbox();
+let configuration = myToolbox.loadFromJsonFile("./conf/configuration.json");
 let bodyParser = require('body-parser');
 let multer = require('multer');
 let upload = multer();
-let port = configuration_1.Configuration.get().common.port;
+let port = configuration.common.port;
 app.use(bodyParser());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*'); // Website you wish to allow to connect
@@ -21,11 +22,12 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-let connexion = new connexion_1.Connexion().tryConnectSql();
+let conn = new dist_1.Connexion(configuration.mySql, configuration.authentification);
+conn.tryConnectSql();
 // Authentification
-new serverAuthentification_1.ServerAuthentification(app).assign();
+new serverAuthentification_1.ServerAuthentification(app, conn).assign();
 // User
-new serverUser_1.ServerUser(app).assign();
+new serverUser_1.ServerUser(app, conn).assign();
 app.listen(port);
-toolbox_1.Toolbox.log("Listening port " + port.toString());
+myToolbox.logg("Listening port " + port.toString());
 //# sourceMappingURL=server.js.map

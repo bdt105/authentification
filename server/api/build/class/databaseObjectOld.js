@@ -173,4 +173,4 @@ class DatabaseTable extends DatabaseRecordset {
     }
 }
 exports.DatabaseTable = DatabaseTable;
-//# sourceMappingURL=databaseObjects.js.map
+//# sourceMappingURL=databaseObjectOld.js.map

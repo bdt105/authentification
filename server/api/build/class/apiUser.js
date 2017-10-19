@@ -57,4 +57,4 @@ class ServerUser extends dist_1.ServerObject {
     }
 }
 exports.ServerUser = ServerUser;
-//# sourceMappingURL=serverUser.js.map
+//# sourceMappingURL=apiUser.js.map

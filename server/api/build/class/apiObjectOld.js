@@ -57,4 +57,4 @@ class ApiObject {
     }
 }
 exports.ApiObject = ApiObject;
-//# sourceMappingURL=apiObject.js.map
+//# sourceMappingURL=apiObjectOld.js.map

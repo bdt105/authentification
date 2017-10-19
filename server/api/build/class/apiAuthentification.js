@@ -69,4 +69,4 @@ class ServerAuthentification {
     }
 }
 exports.ServerAuthentification = ServerAuthentification;
-//# sourceMappingURL=serverAuthentification.js.map
+//# sourceMappingURL=apiAuthentification.js.map

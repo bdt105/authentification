@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configuration_1 = require("./configuration");
-const toolbox_1 = require("./toolbox");
+const dist_1 = require("bdt105configuration/dist");
+const myToolbox_1 = require("./myToolbox");
 class Connexion {
     constructor(jwtSecretKey = null) {
         this.jwtStatusOk = "OK";
         this.jwtStatusERR = "ERR";
         this.jwtSecretKey = jwtSecretKey;
         if (!this.jwtSecretKey) {
-            this.jwtSecretKey = configuration_1.Configuration.get().authentification.secret;
+            this.jwtSecretKey = dist_1.Configuration.get().authentification.secret;
         }
         this.mySql = require('mysql');
         this.jsonwebtoken = require('jsonwebtoken');
     }
     connectSql() {
         this.sqlConnexion = this.mySql.createConnection({
-            "host": configuration_1.Configuration.get().mySql.host,
-            "user": configuration_1.Configuration.get().mySql.user,
-            "port": configuration_1.Configuration.get().mySql.port,
-            "password": configuration_1.Configuration.get().mySql.password,
-            "database": configuration_1.Configuration.get().mySql.database
+            "host": dist_1.Configuration.get().mySql.host,
+            "user": dist_1.Configuration.get().mySql.user,
+            "port": dist_1.Configuration.get().mySql.port,
+            "password": dist_1.Configuration.get().mySql.password,
+            "database": dist_1.Configuration.get().mySql.database
         });
         if (this.sqlConnexion) {
             let err = this.sqlConnexion.connect((err) => this.callbackConnect(err));
@@ -27,7 +27,7 @@ class Connexion {
     }
     releaseSql() {
         if (this.sqlConnexion) {
-            toolbox_1.Toolbox.log('Connexion to the database as id ' + this.sqlConnexion.threadId + ' ended !');
+            myToolbox_1.MyToolbox.log('Connexion to the database as id ' + this.sqlConnexion.threadId + ' ended !');
             this.sqlConnexion.end();
             this.sqlConnexion = null;
         }
@@ -39,7 +39,7 @@ class Connexion {
             this.releaseSql();
             return;
         }
-        toolbox_1.Toolbox.log('Connected to the database as id ' + this.sqlConnexion.threadId);
+        myToolbox_1.MyToolbox.log('Connected to the database as id ' + this.sqlConnexion.threadId);
     }
     callbackGetJwt(callback, err, rows, plainPassword) {
         this.rows = rows;
@@ -92,7 +92,7 @@ class Connexion {
         try {
             var decoded = jwt.verify(token, this.jwtSecretKey);
             if (decoded.iduser) {
-                toolbox_1.Toolbox.log("User Id: " + decoded.iduser + ", login: " + decoded.login);
+                myToolbox_1.MyToolbox.log("User Id: " + decoded.iduser + ", login: " + decoded.login);
             }
             return { "token": token, "status": this.jwtStatusOk, "decoded": decoded };
         }
@@ -111,12 +111,12 @@ class Connexion {
     }
     encrypt(plain) {
         var bcrypt = require('bcryptjs');
-        var hash = bcrypt.hashSync(plain, configuration_1.Configuration.get().authentification.salt);
+        var hash = bcrypt.hashSync(plain, dist_1.Configuration.get().authentification.salt);
         return hash;
     }
     compareEncrypt(encrypted, plain) {
         var bcrypt = require('bcryptjs');
-        var hash = bcrypt.hashSync(plain, configuration_1.Configuration.get().authentification.salt);
+        var hash = bcrypt.hashSync(plain, dist_1.Configuration.get().authentification.salt);
         return hash === encrypted;
     }
     tryConnectSql() {

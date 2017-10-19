@@ -1,22 +1,8 @@
-import { DESTRUCTION } from 'dns';
-import express = require('express');
-import { Connexion } from "./connexion";
-import { Toolbox } from "./toolbox";
-import { Configuration } from "./configuration";
-import { ServerObject } from "./serverObject";
-import { ApiObject } from "./apiObject";
+import { DatabaseTable } from 'bdt105databaseapi/dist/databaseObject';
+import { Connexion } from "bdt105connexion/dist";
+import { QueryAttribute, TableApi, RecordsetApi } from "bdt105databaseapi/dist";
 
-export class ServerUser extends ServerObject {
-
-    private adminToken: string;
-
-    constructor(app: any){
-        super(app);
-        this.tableName = "user";
-        this.idFieldName = "iduser";
-        this.fields = null;
-        this.adminToken = Configuration.get().authentification.adminToken;
-    }
+export class ApiUser extends TableApi {
 
     assign(){
         this.assignObject ("user", "iduser");
@@ -40,8 +26,12 @@ export class ServerUser extends ServerObject {
             if (!usr){
                 response.send(this.errorMessage('Please define a user'))
             }
+
+            let queryAttributes = new QueryAttribute();
+            queryAttributes.from = "user";
+            queryAttributes.select = "*";
                 
-            let table = new ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
+            let table = new DatabaseTable(this.connexion, queryAttributes);
             
             table.save(callback, usr);
         });
@@ -66,7 +56,10 @@ export class ServerUser extends ServerObject {
                 response.send(this.errorMessage('Please define a login'))
             }            
         
-            let table = new ApiObject(this.adminToken, this.tableName, this.idFieldName, this.fields);
+            let queryAttributes = new QueryAttribute();
+            queryAttributes.from = "user";
+            queryAttributes.select = "*";
+            let table = new DatabaseTable(this.connexion, queryAttributes);
             
             table.loadFromWhere(callback, "login='" + login + "'");
         });

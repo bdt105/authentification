@@ -117,4 +117,4 @@ class ServerObject {
     }
 }
 exports.ServerObject = ServerObject;
-//# sourceMappingURL=serverObject.js.map
+//# sourceMappingURL=serverObjectOld.js.map
